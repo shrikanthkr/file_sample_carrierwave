@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @excel.name %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @excel.url %>
+</p>
+
+<%= link_to 'Edit', edit_excel_path(@excel) %> |
+<%= link_to 'Back', excels_path %>
