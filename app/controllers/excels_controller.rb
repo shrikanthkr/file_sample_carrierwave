@@ -13,10 +13,8 @@ class ExcelsController < ApplicationController
   # GET /excels/1
   # GET /excels/1.json
   def show
-    @all_proj = parse_excel(@excel)
-    respond_to do |format|
-      format.json{  render json: @all_proj}
-    end
+
+      render json: Project.all
 
   end
 
@@ -35,7 +33,8 @@ class ExcelsController < ApplicationController
     @excel = Excel.new(excel_params)
     respond_to do |format|
       if @excel.save
-        format.html { redirect_to @excel, notice: 'Excel was successfully created.' }
+        parse_excel(@excel)
+        format.html { redirect_to excels_path, notice: 'Excel was successfully created.' }
         format.json { render action: 'show', status: :created, location: @excel }
       else
         format.html { render action: 'new' }
@@ -95,7 +94,7 @@ class ExcelsController < ApplicationController
       proj.pPass = workbook.row(row)[headers['PassCase']]
       proj.pFail = workbook.row(row)[headers['FailCase']]
       proj.pNoRun = workbook.row(row)[headers['No Run Case']]
-      proj.pNotComp = workbook.row(row)[headers['Not Completed Case']]
+      #proj.pNotComp = workbook.row(row)[headers['Not Completed Case']]
       proj.pTotalCase = workbook.row(row)[headers['Total Case']]
       proj.pRAG = workbook.row(row)[headers['RAG']]
       proj.save

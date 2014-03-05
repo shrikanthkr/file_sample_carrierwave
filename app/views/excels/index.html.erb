@@ -8,7 +8,9 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
   <tbody>
     <% @excels.each do |excel| %>
       <tr>
