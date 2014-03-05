@@ -25,4 +25,7 @@ production:
   pool: 5
   timeout: 5000
   encoding: unicode
-  database: db/gb
+  database: d26ou1os7699a3
+  user: xdtatskgedbbgz
+  password: gwjk6rptRyCbr5wMCjDclZgRGV
+  port: 5432
