@@ -30,6 +30,7 @@ class ExcelsController < ApplicationController
   # POST /excels
   # POST /excels.json
   def create
+    Project.delete_all
     @excel = Excel.new(excel_params)
     respond_to do |format|
       if @excel.save
@@ -83,7 +84,7 @@ class ExcelsController < ApplicationController
     headers = Hash.new
     arr  =  []
     workbook.row(1).each_with_index {|header,i| headers[header] = i }
-    ((workbook.first_row + 1)..workbook.last_row).each do |row|
+    ((workbook.first_row + 1)..workbook.last_row - 3).each do |row|
       proj = Project.new
       proj.name = workbook.row(row)[headers['Name']]
       proj.number = workbook.row(row)[headers['Number']]
@@ -94,7 +95,7 @@ class ExcelsController < ApplicationController
       proj.pPass = workbook.row(row)[headers['PassCase']]
       proj.pFail = workbook.row(row)[headers['FailCase']]
       proj.pNoRun = workbook.row(row)[headers['No Run Case']]
-      #proj.pNotComp = workbook.row(row)[headers['Not Completed Case']]
+      proj.pNotComp = workbook.row(row)[headers['Case']]
       proj.pTotalCase = workbook.row(row)[headers['Total Case']]
       proj.pRAG = workbook.row(row)[headers['RAG']]
       proj.save

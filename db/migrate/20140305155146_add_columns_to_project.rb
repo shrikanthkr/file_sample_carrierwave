@@ -3,7 +3,7 @@ class AddColumnsToProject < ActiveRecord::Migration
     add_column :projects, :pRAG, :string
     add_column :projects, :pPass, :string
     add_column :projects, :pFail, :string
-    add_column :projects, :pNoRun, :stirng
+    add_column :projects, :pNoRun, :string
     add_column :projects, :pNotComp, :string
     add_column :projects, :pTotalCase, :string
     add_column :projects, :pTower, :string
