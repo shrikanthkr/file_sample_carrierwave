@@ -46,8 +46,8 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem 'carrierwave'
-group: :development do
-	gem 'sqlite3'
+group :development do
+  gem 'sqlite3'
 end
 #Excel Sheet Parsing
 gem 'roo'
