@@ -88,10 +88,22 @@ class ExcelsController < ApplicationController
       workbook.row(1).each_with_index {|header,i| headers[header] = i }
       ((workbook.first_row + 1)..workbook.last_row).each do |row|
         proj = Project.new
-        proj.name = workbook.row(row)[headers['Name']]
-        proj.number = workbook.row(row)[headers['Number']]
-        proj.lead = workbook.row(row)[headers['Lead']]
-        proj.save
+        proj.pName = workbook.row(row)[headers['Name']]
+        proj.pNumr = workbook.row(row)[headers['Number']]
+        proj.pLead = workbook.row(row)[headers['Lead']]
+		proj.pTower = workbook.row(row)[headers['Tower']]
+        proj.pSpecType = workbook.row(row)[headers['Type ( For Specialty alone)']]
+        proj.pTargetDate = workbook.row(row)[headers['Target Date']]
+		proj.pPass = workbook.row(row)[headers['PassCase']]
+        proj.pFail = workbook.row(row)[headers['FailCase']]
+        proj.pNoRun = workbook.row(row)[headers['No Run Case']]
+		proj.pNotComp = workbook.row(row)[headers['Not Completed Case']]
+        proj.pTotalCase = workbook.row(row)[headers['Total Case']]
+        proj.pRAG = workbook.row(row)[headers['RAG']]
+      
+		
+		proj.pPass=
+	   proj.save
         arr << proj
       end
     return arr
