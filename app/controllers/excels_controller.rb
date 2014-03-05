@@ -1,6 +1,9 @@
 class ExcelsController < ApplicationController
   before_action :set_excel, only: [:show, :edit, :update, :destroy]
 
+
+  # require 'parser'
+
   # GET /excels
   # GET /excels.json
   def index
@@ -10,6 +13,11 @@ class ExcelsController < ApplicationController
   # GET /excels/1
   # GET /excels/1.json
   def show
+    @all_proj = parse_excel(@excel)
+    respond_to do |format|
+        format.json{  render json: @all_proj}
+    end
+
   end
 
   # GET /excels/new
@@ -25,6 +33,7 @@ class ExcelsController < ApplicationController
   # POST /excels.json
   def create
     @excel = Excel.new(excel_params)
+
 
     respond_to do |format|
       if @excel.save
@@ -71,4 +80,21 @@ class ExcelsController < ApplicationController
     def excel_params
       params.require(:excel).permit(:name, :avatar)
     end
+    
+    def parse_excel obj
+      workbook = Roo::Excel.new("#{Rails.root}/public/#{obj.avatar.to_s}")
+      headers = Hash.new
+      arr  =  []
+      workbook.row(1).each_with_index {|header,i| headers[header] = i }
+      ((workbook.first_row + 1)..workbook.last_row).each do |row|
+        proj = Project.new
+        proj.name = workbook.row(row)[headers['Name']]
+        proj.number = workbook.row(row)[headers['Number']]
+        proj.lead = workbook.row(row)[headers['Lead']]
+        proj.save
+        arr << proj
+      end
+    return arr
+    end
+
 end

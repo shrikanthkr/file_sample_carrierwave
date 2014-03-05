@@ -45,5 +45,9 @@ gem 'spring',        group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
 gem 'carrierwave'
+
+#Excel Sheet Parsing
+gem 'roo'
+gem 'pg'
+
