@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.0.beta1'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0.rc1'
@@ -46,7 +46,9 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem 'carrierwave'
-
+group: :development do
+	gem 'sqlite3'
+end
 #Excel Sheet Parsing
 gem 'roo'
 gem 'pg'
