@@ -15,7 +15,7 @@ class ExcelsController < ApplicationController
   def show
     @all_proj = parse_excel(@excel)
     respond_to do |format|
-        format.json{  render json: @all_proj}
+      format.json{  render json: @all_proj}
     end
 
   end
@@ -33,8 +33,6 @@ class ExcelsController < ApplicationController
   # POST /excels.json
   def create
     @excel = Excel.new(excel_params)
-
-
     respond_to do |format|
       if @excel.save
         format.html { redirect_to @excel, notice: 'Excel was successfully created.' }
@@ -71,42 +69,37 @@ class ExcelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_excel
-      @excel = Excel.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_excel
+    @excel = Excel.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def excel_params
-      params.require(:excel).permit(:name, :avatar)
-    end
-    
-    def parse_excel obj
-      workbook = Roo::Excel.new("#{Rails.root}/public/#{obj.avatar.to_s}")
-      headers = Hash.new
-      arr  =  []
-      workbook.row(1).each_with_index {|header,i| headers[header] = i }
-      ((workbook.first_row + 1)..workbook.last_row).each do |row|
-        proj = Project.new
-        proj.pName = workbook.row(row)[headers['Name']]
-        proj.pNumr = workbook.row(row)[headers['Number']]
-        proj.pLead = workbook.row(row)[headers['Lead']]
-		proj.pTower = workbook.row(row)[headers['Tower']]
-        proj.pSpecType = workbook.row(row)[headers['Type ( For Specialty alone)']]
-        proj.pTargetDate = workbook.row(row)[headers['Target Date']]
-		proj.pPass = workbook.row(row)[headers['PassCase']]
-        proj.pFail = workbook.row(row)[headers['FailCase']]
-        proj.pNoRun = workbook.row(row)[headers['No Run Case']]
-		proj.pNotComp = workbook.row(row)[headers['Not Completed Case']]
-        proj.pTotalCase = workbook.row(row)[headers['Total Case']]
-        proj.pRAG = workbook.row(row)[headers['RAG']]
-      
-		
-		proj.pPass=
-	   proj.save
-        arr << proj
-      end
-    return arr
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def excel_params
+    params.require(:excel).permit(:name, :avatar)
+  end
 
+  def parse_excel obj
+    workbook = Roo::Excel.new("#{Rails.root}/public/#{obj.avatar.to_s}")
+    headers = Hash.new
+    arr  =  []
+    workbook.row(1).each_with_index {|header,i| headers[header] = i }
+    ((workbook.first_row + 1)..workbook.last_row).each do |row|
+      proj = Project.new
+      proj.name = workbook.row(row)[headers['Name']]
+      proj.number = workbook.row(row)[headers['Number']]
+      proj.lead = workbook.row(row)[headers['Lead']]
+      proj.pTower = workbook.row(row)[headers['Tower']]
+      proj.pSpecType = workbook.row(row)[headers['Type ( For Specialty alone)']]
+      proj.pTargetDate = workbook.row(row)[headers['Target Date']]
+      proj.pPass = workbook.row(row)[headers['PassCase']]
+      proj.pFail = workbook.row(row)[headers['FailCase']]
+      proj.pNoRun = workbook.row(row)[headers['No Run Case']]
+      proj.pNotComp = workbook.row(row)[headers['Not Completed Case']]
+      proj.pTotalCase = workbook.row(row)[headers['Total Case']]
+      proj.pRAG = workbook.row(row)[headers['RAG']]
+      proj.save
+      arr << proj
+    end
+  end
 end
