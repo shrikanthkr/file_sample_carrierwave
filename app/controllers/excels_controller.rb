@@ -8,6 +8,11 @@ class ExcelsController < ApplicationController
   # GET /excels.json
   def index
     @excels = Excel.all
+    respond_to do |format|
+     
+        format.html { Excel.all }
+        format.json { render json:  @excels = Excel.last }
+    end
   end
 
   # GET /excels/1
@@ -30,6 +35,7 @@ class ExcelsController < ApplicationController
   # POST /excels
   # POST /excels.json
   def create
+    Excel.delete_all
     Project.delete_all
     @excel = Excel.new(excel_params)
     respond_to do |format|
